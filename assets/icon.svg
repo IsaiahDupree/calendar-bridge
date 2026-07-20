@@ -1,0 +1,68 @@
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="tile" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1b1f28"/>
+      <stop offset="1" stop-color="#0d0f14"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.5" cy="0.46" r="0.55">
+      <stop offset="0" stop-color="#f5b942" stop-opacity="0.22"/>
+      <stop offset="1" stop-color="#f5b942" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffd375"/>
+      <stop offset="1" stop-color="#f5b942"/>
+    </linearGradient>
+  </defs>
+
+  <!-- tile -->
+  <rect x="16" y="16" width="480" height="480" rx="108" fill="url(#tile)"/>
+  <rect x="16.5" y="16.5" width="479" height="479" rx="107.5" fill="none" stroke="#f5b942" stroke-opacity="0.16" stroke-width="1"/>
+  <circle cx="256" cy="248" r="182" fill="url(#glow)"/>
+
+  <!-- calendar: the central glyph -->
+  <!-- two binding tabs poking above the page top -->
+  <rect x="190" y="146" width="20" height="34" rx="10" fill="url(#gold)"/>
+  <rect x="302" y="146" width="20" height="34" rx="10" fill="url(#gold)"/>
+  <rect x="190" y="146" width="20" height="34" rx="10" fill="#0d0f14" fill-opacity="0.18"/>
+  <rect x="302" y="146" width="20" height="34" rx="10" fill="#0d0f14" fill-opacity="0.18"/>
+
+  <!-- gold calendar page -->
+  <rect x="148" y="160" width="216" height="200" rx="28" fill="url(#gold)"/>
+  <rect x="148.5" y="160.5" width="215" height="199" rx="27.5" fill="none" stroke="#0d0f14" stroke-opacity="0.18" stroke-width="1"/>
+
+  <!-- header title bar -->
+  <rect x="192" y="182" width="128" height="12" rx="6" fill="#0d0f14" fill-opacity="0.22"/>
+
+  <!-- dark grid window -->
+  <rect x="162" y="216" width="188" height="128" rx="14" fill="#141821"/>
+  <rect x="162.5" y="216.5" width="187" height="127" rx="13.5" fill="none" stroke="#f5b942" stroke-opacity="0.14" stroke-width="1"/>
+
+  <!-- day cells (4 x 3) -->
+  <g fill="url(#gold)" fill-opacity="0.9">
+    <rect x="176" y="230" width="30" height="26" rx="7"/>
+    <rect x="219" y="230" width="30" height="26" rx="7"/>
+    <rect x="262" y="230" width="30" height="26" rx="7"/>
+    <rect x="305" y="230" width="30" height="26" rx="7"/>
+
+    <rect x="176" y="267" width="30" height="26" rx="7"/>
+    <rect x="219" y="267" width="30" height="26" rx="7"/>
+    <!-- 262,267 is the green "today" cell, drawn below -->
+    <rect x="305" y="267" width="30" height="26" rx="7"/>
+
+    <rect x="176" y="304" width="30" height="26" rx="7"/>
+    <rect x="219" y="304" width="30" height="26" rx="7"/>
+    <rect x="262" y="304" width="30" height="26" rx="7"/>
+    <rect x="305" y="304" width="30" height="26" rx="7"/>
+  </g>
+
+  <!-- the highlighted "today" / event cell -->
+  <rect x="258" y="263" width="38" height="34" rx="9" fill="none" stroke="#4ade80" stroke-opacity="0.4" stroke-width="3"/>
+  <rect x="262" y="267" width="30" height="26" rx="7" fill="#4ade80"/>
+
+  <!-- bridge deck: the family motif, a hairline span beneath the calendar -->
+  <g stroke="#f5b942" stroke-opacity="0.45" stroke-linecap="round" fill="none">
+    <path d="M132 416 L380 416" stroke-width="6"/>
+    <path d="M156 416 L156 394 M206 416 L206 392 M256 416 L256 390 M306 416 L306 392 M356 416 L356 394" stroke-width="3" stroke-opacity="0.32"/>
+    <path d="M132 394 Q256 362 380 394" stroke-width="4" stroke-opacity="0.5"/>
+  </g>
+</svg>

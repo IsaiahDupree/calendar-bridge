@@ -1,0 +1,60 @@
+{
+  "$comment": "CalendarBridge listing for the OpenAI plugin directory (7-section form). Same schema as the sibling template configs in this kit (do not edit those). CalendarBridge is a FREE connector — no billing, no pricing, commerceLinksOutForPurchases is false. NO secrets live in this file: the reviewer demo password is read from ../.env.local by env var name only (DEMO_PASSWORD). PENDING before submit: a hosted demo VIDEO (info.demoRecordingUrl is currently \"PENDING\" — replace with the Unlisted YouTube URL once record-demo.mjs + upload-youtube2.mjs run) and the domain-verification token (set OPENAI_APPS_CHALLENGE on Vercel when the MCP section issues it, then Verify Domain).",
+  "mcpUrl": "https://calendarbridge.vercel.app/mcp",
+  "authentication": "OAuth",
+  "info": {
+    "name": "CalendarBridge",
+    "subtitle": "Apple Calendar in ChatGPT",
+    "subtitleNote": "Subtitle MUST be 30 characters or fewer (OpenAI validates this). This is 25.",
+    "description": "CalendarBridge connects ChatGPT to the Calendar app on your Mac. See what's on your calendar this week, search for an event, add a meeting from a conversation, or move an appointment — all from chat, across every calendar (Work, Personal, Family). Your events never live on our servers: every action is executed on your own Mac by a small open-source agent you install with one command (npx calendar-agent), and the relay only carries each request for the seconds it's in flight. Write actions are always confirmed by you in ChatGPT before they happen. Open source (MIT) and self-hostable.",
+    "category": "Productivity",
+    "developerIdentity": "Dupree Ops",
+    "developerIdentityNote": "Substring matched against the verified identities in the dropdown (Dupree Ops LLC). Identity verification already completed for the earlier Mac Bridge submissions.",
+    "pluginAuthor": "Isaiah Dupree",
+    "websiteUrl": "https://calendarbridge.vercel.app",
+    "supportUrl": "https://calendarbridge.vercel.app/support",
+    "privacyUrl": "https://calendarbridge.vercel.app/privacy",
+    "termsUrl": "https://calendarbridge.vercel.app/terms",
+    "demoRecordingUrl": "PENDING",
+    "demoRecordingNote": "REQUIRED by OpenAI. A recorded demo hosted on YouTube (Unlisted is fine). Currently PENDING — produce it with kit/record-demo.mjs, publish it with kit/upload-youtube2.mjs, then paste the youtu.be URL here before submitting.",
+    "directoryIcon": "../assets/icon-512.png",
+    "composerIcon": "../assets/icon-512.png",
+    "commerceLinksOutForPurchases": false
+  },
+  "domainVerification": {
+    "note": "The MCP section issues a token you must serve at /.well-known/openai-apps-challenge on the MCP hostname. server/api/challenge.js serves it from the OPENAI_APPS_CHALLENGE env var. Set it on Vercel (`vercel env add OPENAI_APPS_CHALLENGE production`), redeploy, then click Verify Domain. The token is a PUBLIC value, not a secret.",
+    "wellKnownPath": "/.well-known/openai-apps-challenge"
+  },
+  "reviewerDemo": {
+    "note": "Reviewers use these to test the app 24/7 with no Mac (demo mode). The account authenticates on the OAuth consent page with email + password; the password lives in ../.env.local (DEMO_PASSWORD), never in this file. Enter the same values verbatim in the Testing section's Test credentials box. The demo account serves a server-side sample calendar (isolated per user), so no real event data is ever exposed.",
+    "email": "reviewer@calendarbridge.demo",
+    "passwordEnvVar": "DEMO_PASSWORD"
+  },
+  "prompts": [
+    "What's on my calendar this week?",
+    "When is my dentist appointment?",
+    "Add a team lunch Friday at noon"
+  ],
+  "promptsNote": "Up to 3 showcase prompts (Prompts section). They render as @Plugin chat bubbles.",
+  "testPrompts": [
+    { "prompt": "What's on my calendar this week?" },
+    { "prompt": "When is my dentist appointment?" },
+    { "prompt": "Add a team lunch Friday at noon" }
+  ],
+  "testPromptsNote": "Mirror of the showcase prompts, one {prompt} object each, for the Testing section's prompt list.",
+  "testCases": [
+    { "scenario": "List calendars", "prompt": "What calendars do I have?", "tools": "list_calendars", "expected": "Returns the demo account's calendars — Work, Personal, and Family (all writable)." },
+    { "scenario": "See this week's events", "prompt": "What's on my calendar this week?", "tools": "list_events", "expected": "Returns this week's events (window from the fixed demo now 2026-07-20 through +7 days), soonest first — including 'Team Standup' (Work, 07-20 09:30) and 'Design Review' (Work, 07-20 13:00), plus Gym, Soccer practice, Dentist, Mom's birthday dinner, and the Q3 Planning offsite." },
+    { "scenario": "Search events by keyword", "prompt": "When is my dentist appointment?", "tools": "search_events", "expected": "Finds 'Dentist' (id cal-6, Personal calendar, 2026-07-22 16:15–17:00, location 'Downtown Dental'). The model can call get_event to open it and read its note ('Ask about the 9am slot')." },
+    { "scenario": "Create an event (write, confirmed)", "prompt": "Add a team lunch Friday at noon", "tools": "create_event", "expected": "ChatGPT confirms the write first, then create_event returns a new event 'Team lunch' on Friday 2026-07-24 at 12:00 (default 1h end, 13:00) with a fresh demo-N id, in the first writable calendar (Work)." },
+    { "scenario": "Update an event (write, confirmed)", "prompt": "Rename 'Gym' to 'Morning workout' and move it to 8am", "tools": "get_event, update_event", "expected": "ChatGPT confirms, then update_event overwrites the passed fields and returns the event (id cal-3) with title 'Morning workout' and its start moved to 2026-07-21 08:00; unpassed fields (calendar Personal) are unchanged." }
+  ],
+  "testCasesNote": "Testing section requires EXACTLY 5 positive test cases; run against the seeded demo calendar.",
+  "negativeTestCases": [
+    { "scenario": "A general scheduling-advice question in the abstract — not a request to act on the user's own Apple Calendar. There is nothing to list, search, or write, so CalendarBridge should not trigger.", "prompt": "What's a good way to structure my week so I have time for deep work?" },
+    { "scenario": "The user refers to a different, non-Apple calendar app. CalendarBridge only works with the Apple Calendar app on the Mac and should not trigger for Google Calendar, Outlook, or Fantastical.", "prompt": "Add this to my Google Calendar." },
+    { "scenario": "A reminder or note action, not a calendar event. CalendarBridge creates and edits calendar events only; it should not trigger to add an Apple Reminder or write an Apple Note.", "prompt": "Remind me to call the dentist tomorrow at 3pm." }
+  ],
+  "negativeTestCasesNote": "Testing section requires EXACTLY 3 negative test cases (prompts where the app should NOT trigger).",
+  "releaseNotes": "Initial release. CalendarBridge connects ChatGPT to your Apple Calendar through a small open-source agent that runs on your own Mac — see what's on your calendar, search events, add meetings, and move appointments across all your calendars. Every write is confirmed by you before it happens. Your events never live on our servers; the cloud piece is only a stateless relay. Free, open source (MIT), and self-hostable."
+}
