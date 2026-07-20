@@ -15,7 +15,7 @@
     "supportUrl": "https://calendarbridge.vercel.app/support",
     "privacyUrl": "https://calendarbridge.vercel.app/privacy",
     "termsUrl": "https://calendarbridge.vercel.app/terms",
-    "demoRecordingUrl": "PENDING",
+    "demoRecordingUrl": "https://youtu.be/9iHKG_jCMqA",
     "demoRecordingNote": "REQUIRED by OpenAI. A recorded demo hosted on YouTube (Unlisted is fine). Currently PENDING — produce it with kit/record-demo.mjs, publish it with kit/upload-youtube2.mjs, then paste the youtu.be URL here before submitting.",
     "directoryIcon": "../assets/icon-512.png",
     "composerIcon": "../assets/icon-512.png",
