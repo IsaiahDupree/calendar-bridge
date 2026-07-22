@@ -24,6 +24,7 @@ export default async function handler(req, res) {
   // verified (the `verified` field also grandfathers older records that lack it).
   const needsVerify = emailEnabled && !isDemo && isSendableEmail(normalized);
   await redis.set(key, JSON.stringify({ id, pw: hashPassword(password), email: normalized, verified: !needsVerify }));
+  await redis.set(`uid2email:${id}`, normalized); // Command Center bundle: userId -> email for cross-bridge entitlement
   if (isDemo) {
     await redis.set(`demo:${id}`, '1'); // reviewer demo account: MCP tools use the sample calendar
   }
