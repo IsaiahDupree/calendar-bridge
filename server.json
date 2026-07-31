@@ -1,0 +1,18 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.isaiahdupree/calendar-bridge",
+  "description": "Connects ChatGPT to your Apple Calendar via a local Mac agent + Vercel relay",
+  "version": "1.3.0",
+  "websiteUrl": "https://calendarbridge.vercel.app",
+  "repository": {
+    "url": "https://github.com/IsaiahDupree/calendar-bridge",
+    "source": "github",
+    "id": "1306121217"
+  },
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://calendarbridge.vercel.app/mcp"
+    }
+  ]
+}
