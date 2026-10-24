@@ -12,11 +12,12 @@ export default async function handler(req, res) {
       redisOk = false;
     }
   }
-  res.json({
-    ok: true,
+  const ok = redisConfigured && redisOk && !!process.env.JWT_SECRET;
+  res.status(ok ? 200 : 503).json({
+    ok,
     redisConfigured,
     redisOk,
     jwtSecretSet: !!process.env.JWT_SECRET,
-    version: '1.3.0',
+    version: '1.4.0',
   });
 }

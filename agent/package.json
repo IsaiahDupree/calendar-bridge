@@ -1,7 +1,7 @@
 {
   "name": "calendar-agent",
-  "version": "1.0.0",
-  "description": "Local agent for the CalendarBridge MCP connector — lets ChatGPT view and manage your Apple Calendar on your own Mac.",
+  "version": "1.1.0",
+  "description": "Local agent for the CalendarBridge MCP connector \u2014 lets ChatGPT view and manage your Apple Calendar on your own Mac.",
   "type": "module",
   "bin": {
     "calendar-agent": "./cli.mjs"

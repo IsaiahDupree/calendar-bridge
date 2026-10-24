@@ -9,7 +9,7 @@
 
 </div>
 
-CalendarBridge is a [Model Context Protocol](https://modelcontextprotocol.io) (MCP) connector that lets ChatGPT work with your **Apple Calendar**. It never uploads your events to a third party — every action runs on **your own Mac** through a tiny local agent. The cloud piece is only a stateless relay that shuttles requests between ChatGPT and your Mac.
+CalendarBridge is a [Model Context Protocol](https://modelcontextprotocol.io) (MCP) connector that lets ChatGPT work with your **Apple Calendar**. Reads execute locally and requested results pass through the authenticated relay — every action runs on **your own Mac** through a tiny local agent. The cloud piece is only a stateless relay that shuttles requests between ChatGPT and your Mac.
 
 ```
   ChatGPT  ──OAuth──►  CalendarBridge relay  ──job queue──►  calendar-agent  ──►  Calendar.app
@@ -108,7 +108,7 @@ node --test agent/test-agent-unit.mjs
 
 ## Security & privacy
 
-- Events are read/written **only on your Mac**. The relay never persists event content — job payloads live in Redis-shaped storage with a short TTL and are deleted on delivery.
+- Events are read/written **only on your Mac**. The relay temporarily stores requested content in short-lived job/result queues — job payloads live in Redis-shaped storage with a short TTL and are deleted on delivery.
 - The agent token is stored at `~/.calendarbridge-agent.json` (mode `600`).
 - No secrets are committed; see [`.gitignore`](./.gitignore) and the `.env.example` files.
 - Write tools are marked destructive so ChatGPT asks before changing an event.
@@ -116,3 +116,9 @@ node --test agent/test-agent-unit.mjs
 ## License
 
 [MIT](./LICENSE) © Isaiah Dupree
+
+## Production storage and owner verification
+
+Relay 1.4 uses isolated service-role-only tables/functions on the configured shared Supabase project. Production refuses missing storage configuration, bounds RPC requests to ten seconds, and returns HTTP 503 when storage or signing configuration is unavailable. Apply the checked-in isolated-storage migration before deploying this version; it does not replace another bridge's account tables or functions.
+
+`node --env-file=.env.local test/live-storage.mjs` verifies the actual persistent store, FIFO, expiry and counters using temporary integration keys. `BRIDGE_SESSION_FILE=/private/owner-session.json BRIDGE_READ_TOOL=READ_TOOL node test/live-relay.mjs` verifies the actual owner session, PKCE OAuth, hosted MCP and paired-Mac read; choose this bridge's inventory tool. No reviewer data counts as a live acceptance. Credentials and sessions belong outside Git.

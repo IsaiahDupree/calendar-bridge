@@ -1,6 +1,6 @@
 {
   "name": "calendar-relay",
-  "version": "1.0.0",
+  "version": "1.4.0",
   "type": "module",
   "scripts": {
     "test": "node --test test-server-unit.mjs"

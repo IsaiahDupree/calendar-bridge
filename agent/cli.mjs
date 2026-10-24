@@ -270,7 +270,7 @@ async function cmdRun(serverFlag) {
         log(`job ${job.jobId}: skipped — stale (queued ${ageS}s ago, caller gave up)`);
         continue;
       }
-      log(`job ${job.jobId}: ${job.tool} ${JSON.stringify(job.args ?? {}).slice(0, 200)}`);
+      log(`job ${job.jobId}: ${job.tool}`);
       let payload;
       try {
         payload = { jobId: job.jobId, ok: true, result: await runTool(job.tool, job.args ?? {}) };
