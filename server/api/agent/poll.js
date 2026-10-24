@@ -6,7 +6,8 @@ import { markAgentOnline, waitForJob } from '../../lib/relay.js';
 // reconnects immediately. Without ?wait, it returns right away (back-compat with
 // older agents). The hang is capped below this function's maxDuration (vercel.json)
 // and below the 75s online-marker TTL set here, so one mark per hang is enough.
-const MAX_WAIT_SEC = 25;
+// Leave 15 seconds of the 30-second function budget for authenticated storage calls.
+const MAX_WAIT_SEC = 15;
 
 export default async function handler(req, res) {
   const agent = await requireAgent(req, res);

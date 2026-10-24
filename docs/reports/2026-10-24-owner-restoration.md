@@ -13,3 +13,9 @@
 Browser reconnect, refreshed tool definitions and installed-plugin data reads are being verified separately. Intermittent production RPC timeouts and native macOS permission prompts were observed and are not counted as successful data reads.
 
 The installed ChatGPT account reconnect completed and tools were refreshed. Calendar native reads returned seven calendars after the observed macOS permission flow; the daemon has its separate node-to-Calendar grant. Installed tool read acceptance is still being checked.
+
+## Final installed connection acceptance
+
+Installed ChatGPT reconnection and Refresh tools completed. The installed list_calendars tool returned seven real native calendars after the paired node process received its observed Calendar Automation/data permissions.
+
+The hosted agent long-poll now caps its wait at 15 seconds, reserving the other half of Vercel’s 30-second limit for authentication and persistent-storage calls. This addresses observed idle-poll 504s; upstream database connectivity can still fail explicitly rather than returning sample data. Existing server unit tests passed after the change.
